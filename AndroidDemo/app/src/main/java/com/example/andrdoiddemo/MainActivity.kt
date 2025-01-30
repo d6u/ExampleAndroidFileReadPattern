@@ -1,10 +1,10 @@
 package com.example.andrdoiddemo
 
+import android.content.Intent
 import android.content.res.AssetManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.andrdoiddemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,26 +16,73 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.sampleText.text = stringFromJNI()
 
-        Log.d(MainActivity::class.java.simpleName, "dataDir is ${applicationContext.dataDir}")
+        val dataDir: String = applicationContext.dataDir.toString()
 
-        init(applicationContext.dataDir.toString(), applicationContext.assets)
+        Log.d(TAG, "dataDir is $dataDir")
+
+        when (Action.fromIntent(intent)) {
+            Action.INIT -> {
+                init(applicationContext.assets, dataDir)
+            }
+
+            Action.ASSET_READ_ONE_GO -> {
+                assetReadOneGo(applicationContext.assets)
+            }
+
+            Action.ASSET_READ_MULTIPLE_GO -> {
+                val pieces = intent.extras?.getInt("pieces") ?: 10
+                assetReadMultipleGo(applicationContext.assets, pieces)
+            }
+
+            Action.FILE_READ_ONE_GO -> {
+                fileReadOneGo(applicationContext.assets, dataDir)
+            }
+
+            Action.FILE_READ_MULTIPLE_GO -> {
+                val pieces = intent.extras?.getInt("pieces") ?: 10
+                fileReadMultipleGo(applicationContext.assets, dataDir, pieces)
+            }
+
+            else -> {
+                Log.e(TAG, "Unknown action")
+            }
+        }
     }
 
-    /**
-     * A native method that is implemented by the 'andrdoiddemo' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    private external fun stringFromJNI(): String
 
-    external fun init(dataDir: String, assetManager: AssetManager)
+    private external fun init(assetManager: AssetManager, dataDir: String)
+    private external fun assetReadOneGo(assetManager: AssetManager)
+    private external fun assetReadMultipleGo(assetManager: AssetManager, n: Int)
+    private external fun fileReadOneGo(assetManager: AssetManager, dataDir: String)
+    private external fun fileReadMultipleGo(assetManager: AssetManager, dataDir: String, n: Int)
+
 
     companion object {
+        private val TAG = MainActivity::class.java.simpleName
+
         // Used to load the 'andrdoiddemo' library on application startup.
         init {
             System.loadLibrary("andrdoiddemo")
+        }
+    }
+
+    enum class Action {
+        INIT, ASSET_READ_ONE_GO, ASSET_READ_MULTIPLE_GO, FILE_READ_ONE_GO, FILE_READ_MULTIPLE_GO;
+
+        companion object {
+            fun fromIntent(intent: Intent): Action? {
+                return when (intent.action) {
+                    "com.example.andrdoiddemo.action.INIT" -> INIT
+                    "com.example.andrdoiddemo.action.ASSET_READ_ONE_GO" -> ASSET_READ_ONE_GO
+                    "com.example.andrdoiddemo.action.ASSET_READ_MULTIPLE_GO" -> ASSET_READ_MULTIPLE_GO
+                    "com.example.andrdoiddemo.action.FILE_READ_ONE_GO" -> FILE_READ_ONE_GO
+                    "com.example.andrdoiddemo.action.FILE_READ_MULTIPLE_GO" -> FILE_READ_MULTIPLE_GO
+                    else -> null
+                }
+            }
         }
     }
 }
