@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.andrdoiddemo"
+    namespace = "com.example.assetpack"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.andrdoiddemo"
+        applicationId = "com.example.assetpack"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

@@ -21,11 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.example.andrdoiddemo.action.INIT" />
-                <action android:name="com.example.andrdoiddemo.action.ASSET_READ_ONE_GO" />
-                <action android:name="com.example.andrdoiddemo.action.ASSET_READ_MULTIPLE_GO" />
-                <action android:name="com.example.andrdoiddemo.action.FILE_READ_ONE_GO" />
-                <action android:name="com.example.andrdoiddemo.action.FILE_READ_MULTIPLE_GO" />
+                <action android:name="com.example.assetpack.action.INIT" />
+                <action android:name="com.example.assetpack.action.ASSET_READ_ONE_GO" />
+                <action android:name="com.example.assetpack.action.ASSET_READ_MULTIPLE_GO" />
+                <action android:name="com.example.assetpack.action.FILE_READ_ONE_GO" />
+                <action android:name="com.example.assetpack.action.FILE_READ_MULTIPLE_GO" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -1,4 +1,4 @@
-package com.example.andrdoiddemo
+package com.example.assetpack
 
 import org.junit.Test
 

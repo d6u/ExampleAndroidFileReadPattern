@@ -20,14 +20,14 @@ constexpr const char *kAssetFileName = "random_content.txt";
 constexpr const char *kDataDirFilePath = "/local_content.txt";
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_andrdoiddemo_MainActivity_stringFromJNI(JNIEnv *env,
+Java_com_example_assetpack_MainActivity_stringFromJNI(JNIEnv *env,
                                                          jobject /* this */) {
   std::string hello = "Hello from C++";
   return env->NewStringUTF(hello.c_str());
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_andrdoiddemo_MainActivity_init(JNIEnv *env, jobject,
+Java_com_example_assetpack_MainActivity_init(JNIEnv *env, jobject,
                                                 jobject jAssetManager,
                                                 jstring jDataDir) {
   // init function will copy random_content.txt to app's data folder for future
@@ -70,7 +70,7 @@ Java_com_example_andrdoiddemo_MainActivity_init(JNIEnv *env, jobject,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_andrdoiddemo_MainActivity_assetReadOneGo(
+Java_com_example_assetpack_MainActivity_assetReadOneGo(
     JNIEnv *env, jobject, jobject jAssetManager) {
   AAssetManager *assetManager = AAssetManager_fromJava(env, jAssetManager);
 
@@ -102,7 +102,7 @@ Java_com_example_andrdoiddemo_MainActivity_assetReadOneGo(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_andrdoiddemo_MainActivity_assetReadMultipleGo(
+Java_com_example_assetpack_MainActivity_assetReadMultipleGo(
     JNIEnv *env, jobject, jobject jAssetManager, jint n) {
   __android_log_print(ANDROID_LOG_INFO, kLogTag, "Split into %d pieces", n);
 
@@ -169,7 +169,7 @@ Java_com_example_andrdoiddemo_MainActivity_assetReadMultipleGo(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_andrdoiddemo_MainActivity_fileReadOneGo(JNIEnv *env, jobject,
+Java_com_example_assetpack_MainActivity_fileReadOneGo(JNIEnv *env, jobject,
                                                          jobject jAssetManager,
                                                          jstring jDataDir) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
@@ -219,7 +219,7 @@ Java_com_example_andrdoiddemo_MainActivity_fileReadOneGo(JNIEnv *env, jobject,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_andrdoiddemo_MainActivity_fileReadMultipleGo(
+Java_com_example_assetpack_MainActivity_fileReadMultipleGo(
     JNIEnv *env, jobject, jobject jAssetManager, jstring jDataDir, jint n) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
 
