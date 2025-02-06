@@ -36,13 +36,30 @@ class MainActivity : AppCompatActivity() {
                 assetReadMultipleGo(applicationContext.assets, pieces)
             }
 
+            Action.OPEN_ONE_GO -> {
+                openOneGo(dataDir)
+            }
+
             Action.FILE_READ_ONE_GO -> {
-                fileReadOneGo(applicationContext.assets, dataDir)
+                fileReadOneGo(dataDir)
             }
 
             Action.FILE_READ_MULTIPLE_GO -> {
                 val pieces = intent.extras?.getInt("pieces") ?: 10
-                fileReadMultipleGo(applicationContext.assets, dataDir, pieces)
+                fileReadMultipleGo(dataDir, pieces)
+            }
+
+            Action.STREAM_FILE_READ_ONE_GO -> {
+                streamFileReadOneGo(dataDir)
+            }
+
+            Action.STREAM_FILE_READ_MULTIPLE_GO -> {
+                val pieces = intent.extras?.getInt("pieces") ?: 10
+                streamFileReadMultipleGo(dataDir, pieces)
+            }
+
+            Action.FOPEN_ONE_GO -> {
+                fopenOneGo(dataDir)
             }
 
             else -> {
@@ -56,8 +73,12 @@ class MainActivity : AppCompatActivity() {
     private external fun init(assetManager: AssetManager, dataDir: String)
     private external fun assetReadOneGo(assetManager: AssetManager)
     private external fun assetReadMultipleGo(assetManager: AssetManager, n: Int)
-    private external fun fileReadOneGo(assetManager: AssetManager, dataDir: String)
-    private external fun fileReadMultipleGo(assetManager: AssetManager, dataDir: String, n: Int)
+    private external fun openOneGo(dataDir: String)
+    private external fun fileReadOneGo(dataDir: String)
+    private external fun fileReadMultipleGo(dataDir: String, n: Int)
+    private external fun streamFileReadOneGo(dataDir: String)
+    private external fun streamFileReadMultipleGo(dataDir: String, n: Int)
+    private external fun fopenOneGo(dataDir: String)
 
 
     companion object {
@@ -76,7 +97,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class Action {
-        INIT, ASSET_READ_ONE_GO, ASSET_READ_MULTIPLE_GO, FILE_READ_ONE_GO, FILE_READ_MULTIPLE_GO;
+        INIT,
+        ASSET_READ_ONE_GO,
+        ASSET_READ_MULTIPLE_GO,
+        OPEN_ONE_GO,
+        FILE_READ_ONE_GO,
+        FILE_READ_MULTIPLE_GO,
+        STREAM_FILE_READ_ONE_GO,
+        STREAM_FILE_READ_MULTIPLE_GO,
+        FOPEN_ONE_GO;
 
         companion object {
             fun fromIntent(intent: Intent): Action? {
@@ -84,8 +113,12 @@ class MainActivity : AppCompatActivity() {
                     "com.example.assetpack.action.INIT" -> INIT
                     "com.example.assetpack.action.ASSET_READ_ONE_GO" -> ASSET_READ_ONE_GO
                     "com.example.assetpack.action.ASSET_READ_MULTIPLE_GO" -> ASSET_READ_MULTIPLE_GO
+                    "com.example.assetpack.action.OPEN_ONE_GO" -> OPEN_ONE_GO
                     "com.example.assetpack.action.FILE_READ_ONE_GO" -> FILE_READ_ONE_GO
                     "com.example.assetpack.action.FILE_READ_MULTIPLE_GO" -> FILE_READ_MULTIPLE_GO
+                    "com.example.assetpack.action.STREAM_FILE_READ_ONE_GO" -> STREAM_FILE_READ_ONE_GO
+                    "com.example.assetpack.action.STREAM_FILE_READ_MULTIPLE_GO" -> STREAM_FILE_READ_MULTIPLE_GO
+                    "com.example.assetpack.action.FOPEN_ONE_GO" -> FOPEN_ONE_GO
                     else -> null
                 }
             }
