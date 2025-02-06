@@ -28,12 +28,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             Action.ASSET_READ_ONE_GO -> {
-                assetReadOneGo(applicationContext.assets)
+                assetGetBufferOneGo(applicationContext.assets)
             }
 
             Action.ASSET_READ_MULTIPLE_GO -> {
                 val pieces = intent.extras?.getInt("pieces") ?: 10
-                assetReadMultipleGo(applicationContext.assets, pieces)
+                assetGetBufferMultipleGo(applicationContext.assets, pieces)
             }
 
             Action.OPEN_ONE_GO -> {
@@ -45,21 +45,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             Action.FILE_READ_ONE_GO -> {
-                fileReadOneGo(dataDir)
+                openWithMmapOneGo(dataDir)
             }
 
             Action.FILE_READ_MULTIPLE_GO -> {
                 val pieces = intent.extras?.getInt("pieces") ?: 10
-                fileReadMultipleGo(dataDir, pieces)
+                openWithMmapMultipleGo(dataDir, pieces)
             }
 
             Action.STREAM_FILE_READ_ONE_GO -> {
-                streamFileReadOneGo(dataDir)
+                ifstreamOneGo(dataDir)
             }
 
             Action.STREAM_FILE_READ_MULTIPLE_GO -> {
                 val pieces = intent.extras?.getInt("pieces") ?: 10
-                streamFileReadMultipleGo(dataDir, pieces)
+                ifstreamMultipleGo(dataDir, pieces)
             }
 
             Action.FOPEN_ONE_GO -> {
@@ -75,14 +75,14 @@ class MainActivity : AppCompatActivity() {
     private external fun stringFromJNI(): String
 
     private external fun init(assetManager: AssetManager, dataDir: String)
-    private external fun assetReadOneGo(assetManager: AssetManager)
-    private external fun assetReadMultipleGo(assetManager: AssetManager, n: Int)
+    private external fun assetGetBufferOneGo(assetManager: AssetManager)
+    private external fun assetGetBufferMultipleGo(assetManager: AssetManager, n: Int)
     private external fun openOneGo(dataDir: String)
     private external fun openNoStatOneGo(dataDir: String)
-    private external fun fileReadOneGo(dataDir: String)
-    private external fun fileReadMultipleGo(dataDir: String, n: Int)
-    private external fun streamFileReadOneGo(dataDir: String)
-    private external fun streamFileReadMultipleGo(dataDir: String, n: Int)
+    private external fun openWithMmapOneGo(dataDir: String)
+    private external fun openWithMmapMultipleGo(dataDir: String, n: Int)
+    private external fun ifstreamOneGo(dataDir: String)
+    private external fun ifstreamMultipleGo(dataDir: String, n: Int)
     private external fun fopenOneGo(dataDir: String)
 
 

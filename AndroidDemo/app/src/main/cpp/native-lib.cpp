@@ -78,8 +78,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_example_assetpack_MainActivity_init(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_assetReadOneGo(JNIEnv *env, jobject,
-                                                       jobject jAssetManager) {
+Java_com_example_assetpack_MainActivity_assetGetBufferOneGo(
+    JNIEnv *env, jobject, jobject jAssetManager) {
   AAssetManager *assetManager = AAssetManager_fromJava(env, jAssetManager);
 
   auto start = std::chrono::high_resolution_clock::now();
@@ -110,7 +110,7 @@ Java_com_example_assetpack_MainActivity_assetReadOneGo(JNIEnv *env, jobject,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_assetReadMultipleGo(
+Java_com_example_assetpack_MainActivity_assetGetBufferMultipleGo(
     JNIEnv *env, jobject, jobject jAssetManager, jint n) {
   __android_log_print(ANDROID_LOG_INFO, kLogTag, "Split into %d pieces", n);
 
@@ -177,8 +177,8 @@ Java_com_example_assetpack_MainActivity_assetReadMultipleGo(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_fileReadOneGo(JNIEnv *env, jobject,
-                                                      jstring jDataDir) {
+Java_com_example_assetpack_MainActivity_openWithMmapOneGo(JNIEnv *env, jobject,
+                                                          jstring jDataDir) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
 
   std::string filePath = std::string(dataDir) + kDataDirFilePath;
@@ -226,9 +226,10 @@ Java_com_example_assetpack_MainActivity_fileReadOneGo(JNIEnv *env, jobject,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_fileReadMultipleGo(JNIEnv *env, jobject,
-                                                           jstring jDataDir,
-                                                           jint n) {
+Java_com_example_assetpack_MainActivity_openWithMmapMultipleGo(JNIEnv *env,
+                                                               jobject,
+                                                               jstring jDataDir,
+                                                               jint n) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
 
   std::string filePath = std::string(dataDir) + kDataDirFilePath;
@@ -310,9 +311,8 @@ Java_com_example_assetpack_MainActivity_fileReadMultipleGo(JNIEnv *env, jobject,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_streamFileReadOneGo(JNIEnv *env,
-                                                            jobject,
-                                                            jstring jDataDir) {
+Java_com_example_assetpack_MainActivity_ifstreamOneGo(JNIEnv *env, jobject,
+                                                      jstring jDataDir) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
 
   std::string filePath = std::string(dataDir) + kDataDirFilePath;
@@ -353,8 +353,9 @@ Java_com_example_assetpack_MainActivity_streamFileReadOneGo(JNIEnv *env,
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_assetpack_MainActivity_streamFileReadMultipleGo(
-    JNIEnv *env, jobject, jstring jDataDir, jint n) {
+Java_com_example_assetpack_MainActivity_ifstreamMultipleGo(JNIEnv *env, jobject,
+                                                           jstring jDataDir,
+                                                           jint n) {
   const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
 
   std::string filePath = std::string(dataDir) + kDataDirFilePath;
