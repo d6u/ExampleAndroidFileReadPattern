@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
                 openOneGo(dataDir)
             }
 
+            Action.OPEN_NO_STAT_ONE_GO -> {
+                openNoStatOneGo(dataDir)
+            }
+
             Action.FILE_READ_ONE_GO -> {
                 fileReadOneGo(dataDir)
             }
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity() {
     private external fun assetReadOneGo(assetManager: AssetManager)
     private external fun assetReadMultipleGo(assetManager: AssetManager, n: Int)
     private external fun openOneGo(dataDir: String)
+    private external fun openNoStatOneGo(dataDir: String)
     private external fun fileReadOneGo(dataDir: String)
     private external fun fileReadMultipleGo(dataDir: String, n: Int)
     private external fun streamFileReadOneGo(dataDir: String)
@@ -101,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         ASSET_READ_ONE_GO,
         ASSET_READ_MULTIPLE_GO,
         OPEN_ONE_GO,
+        OPEN_NO_STAT_ONE_GO,
         FILE_READ_ONE_GO,
         FILE_READ_MULTIPLE_GO,
         STREAM_FILE_READ_ONE_GO,
@@ -114,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                     "com.example.assetpack.action.ASSET_READ_ONE_GO" -> ASSET_READ_ONE_GO
                     "com.example.assetpack.action.ASSET_READ_MULTIPLE_GO" -> ASSET_READ_MULTIPLE_GO
                     "com.example.assetpack.action.OPEN_ONE_GO" -> OPEN_ONE_GO
+                    "com.example.assetpack.action.OPEN_NO_STAT_ONE_GO" -> OPEN_NO_STAT_ONE_GO
                     "com.example.assetpack.action.FILE_READ_ONE_GO" -> FILE_READ_ONE_GO
                     "com.example.assetpack.action.FILE_READ_MULTIPLE_GO" -> FILE_READ_MULTIPLE_GO
                     "com.example.assetpack.action.STREAM_FILE_READ_ONE_GO" -> STREAM_FILE_READ_ONE_GO

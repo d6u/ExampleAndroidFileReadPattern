@@ -26,6 +26,7 @@
                 <action android:name="com.example.assetpack.action.ASSET_READ_ONE_GO" />
                 <action android:name="com.example.assetpack.action.ASSET_READ_MULTIPLE_GO" />
                 <action android:name="com.example.assetpack.action.OPEN_ONE_GO" />
+                <action android:name="com.example.assetpack.action.OPEN_NO_STAT_ONE_GO" />
                 <action android:name="com.example.assetpack.action.FILE_READ_ONE_GO" />
                 <action android:name="com.example.assetpack.action.FILE_READ_MULTIPLE_GO" />
                 <action android:name="com.example.assetpack.action.STREAM_FILE_READ_ONE_GO" />

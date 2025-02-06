@@ -510,3 +510,57 @@ Java_com_example_assetpack_MainActivity_openOneGo(JNIEnv *env, jobject,
 
   env->ReleaseStringUTFChars(jDataDir, dataDir);
 }
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_example_assetpack_MainActivity_openNoStatOneGo(JNIEnv *env, jobject,
+                                                        jstring jDataDir) {
+  const char *dataDir = env->GetStringUTFChars(jDataDir, nullptr);
+
+  std::string filePath = std::string(dataDir) + kDataDirFilePath;
+
+  // SECTION: Measurement start
+  auto start = std::chrono::high_resolution_clock::now();
+
+  int fd = open(filePath.c_str(), O_RDONLY);
+  if (fd == -1) {
+    __android_log_print(ANDROID_LOG_ERROR, kLogTag, "Failed to open file %s",
+                        filePath.c_str());
+    env->ReleaseStringUTFChars(jDataDir, dataDir);
+    return;
+  }
+
+  off_t fileSize = lseek(fd, 0, SEEK_END);
+  if (fileSize == -1) {
+    __android_log_print(ANDROID_LOG_ERROR, kLogTag,
+                        "Failed to determine file size for %s",
+                        filePath.c_str());
+    close(fd);
+    env->ReleaseStringUTFChars(jDataDir, dataDir);
+    return;
+  }
+  lseek(fd, 0, SEEK_SET);
+
+  char *buffer = new char[fileSize];
+
+  ssize_t bytesRead = read(fd, buffer, fileSize);
+  if (bytesRead != fileSize) {
+    __android_log_print(ANDROID_LOG_ERROR, kLogTag, "Failed to read file %s",
+                        filePath.c_str());
+    delete[] buffer;
+    close(fd);
+    env->ReleaseStringUTFChars(jDataDir, dataDir);
+    return;
+  }
+
+  auto end = std::chrono::high_resolution_clock::now();
+  // !SECTION
+  std::chrono::duration<double, std::milli> duration = end - start;
+
+  __android_log_print(ANDROID_LOG_INFO, kLogTag,
+                      "Time taken to copy buffer: %f ms", duration.count());
+
+  delete[] buffer;
+  close(fd);
+
+  env->ReleaseStringUTFChars(jDataDir, dataDir);
+}
